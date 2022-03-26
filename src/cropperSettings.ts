@@ -1,5 +1,12 @@
 import { CropperDrawSettings } from "./cropperDrawSettings";
-
+export interface ImageTransform {
+  scale?: number;
+  rotate?: number;
+  flipH?: boolean;
+  flipV?: boolean;
+  translateH?: number;
+  translateV?: number;
+}
 export interface ICropperSettings {
   canvasWidth?: number;
   canvasHeight?: number;
@@ -19,6 +26,8 @@ export interface ICropperSettings {
   preserveSize: boolean;
   cropOnResize: boolean;
   compressRatio: number;
+  transform: ImageTransform;
+  canvasRotation: number;
 }
 
 export class CropperSettings implements ICropperSettings {
@@ -57,6 +66,9 @@ export class CropperSettings implements ICropperSettings {
 
   public compressRatio: number = 1.0;
 
+  public transform: ImageTransform;
+  public canvasRotation: number = 0;
+
   private _rounded: boolean = false;
   private _keepAspect: boolean = true;
 
@@ -84,6 +96,8 @@ export class CropperSettings implements ICropperSettings {
       this.preserveSize = settings.preserveSize || this.preserveSize;
       this.cropOnResize = settings.cropOnResize || this.cropOnResize;
       this.compressRatio = settings.compressRatio || this.compressRatio;
+      this.transform = settings.transform || this.transform;
+      this.canvasRotation = settings.canvasRotation || this.canvasRotation;
 
       this.cropperDrawSettings =
         settings.cropperDrawSettings || this.cropperDrawSettings;
